@@ -98,9 +98,10 @@ typedef struct StyleLinkRec_ {
 	Dict *parents;		/**< 父级节点 */
 } StyleLinkRec, *StyleLink;
 
-static struct {
+static struct CSSLibrary {
 	LCUI_BOOL active;
-	LCUI_Mutex mutex;		/**< 互斥锁 */
+	LCUI_Mutex mutex;
+	LCUI_CSSRuleRec rule;
 	LinkedList groups;		/**< 样式组列表 */
 	Dict *cache;			/**< 样式表缓存，以选择器的 hash 值索引 */
 	Dict *names;			/**< 样式属性名称表，以值的名称索引 */
@@ -1722,6 +1723,16 @@ static void DestroyStyleValueLibrary(void)
 	Dict_Release(library.value_keys);
 	library.value_keys = NULL;
 	library.value_names = NULL;
+}
+
+void LCUI_GetCSSRule(LCUI_CSSRule rule)
+{
+	*rule = library.rule;
+}
+
+void LCUI_SetCSSRule(LCUI_CSSRule rule)
+{
+	library.rule = *rule;
 }
 
 void LCUI_InitCSSLibrary(void)

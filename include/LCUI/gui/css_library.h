@@ -145,6 +145,58 @@ enum LCUI_StyleKeyName {
 #define key_box_shadow_start	key_box_shadow_x
 #define key_box_shadow_end	key_box_shadow_color
 
+typedef enum LCUI_CSSMediaType {
+	LCUI_CSS_MEDIA_SCREEN,
+	LCUI_CSS_MEDIA_PRINT
+} LCUI_CSSMediaType;
+
+/* Reference: https://drafts.csswg.org/mediaqueries-4/#mq-syntax */
+typedef enum LCUI_CSSMediaQueryType {
+	LCUI_CSS_MEDIA_CONDITION,
+	LCUI_CSS_MEDIA_CONDITION_WITHOUT_OR,
+	LCUI_CSS_MEDIA_NOT,
+	LCUI_CSS_MEDIA_AND,
+	LCUI_CSS_MEDIA_OR,
+	LCUI_CSS_MEDIA_IN_PARENS,
+	LCUI_CSS_MEDIA_FEATURE,
+	LCUI_CSS_MEDIA_FEATURE_PLAIN,
+	LCUI_CSS_MEDIA_FEATURE_BOOLEAN,
+	LCUI_CSS_MEDIA_FEATURE_RANGE,
+	LCUI_CSS_MEDIA_FEATURE_VALUE,
+	LCUI_CSS_MEDIA_FEATURE_NAME,
+	LCUI_CSS_MEDIA_FEATURE_LT,
+	LCUI_CSS_MEDIA_FEATURE_GT,
+	LCUI_CSS_MEDIA_FEATURE_EQ
+} LCUI_CSSMediaQueryType;
+
+typedef struct LCUI_CSSMediaQueryRec_ {
+	LCUI_CSSMediaQueryType type;
+	union {
+		int ident;
+		int number;
+		LinkedList body;
+	};
+} LCUI_CSSMediaQueryRec, *LCUI_CSSMediaQuery;
+
+/* Reference: https://developer.mozilla.org/en-US/docs/Web/CSS/@media/orientation */
+typedef enum LCUI_CSSMediaOrientation {
+	LCUI_CSS_MEDIA_ORIENTATION_LANDSCAPE,
+	LCUI_CSS_MEDIA_ORIENTATION_PORTRAIT
+} LCUI_CSSMediaOrientation;
+
+/* Reference: https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features */
+typedef struct LCUI_CSSMediaRuleRec_ {
+	int width, height;
+	LCUI_CSSMediaOrientation orientation;
+} LCUI_CSSMediaRuleRec, *LCUI_CSSMediaRule;
+
+typedef LinkedList LCUI_CSSRuleQueryListRec;
+typedef LinkedList *LCUI_CSSRuleQueryList;
+
+typedef struct LCUI_CSSRuleRec_ {
+	LCUI_CSSMediaRuleRec media;
+} LCUI_CSSRuleRec, *LCUI_CSSRule;
+
 typedef struct LCUI_StyleSheetRec_ {
 	LCUI_Style sheet;
 	int length;
@@ -286,6 +338,10 @@ LCUI_API int LCUI_GetStyleTotal(void);
 LCUI_API void LCUI_PrintStyleSheet(LCUI_StyleSheet ss);
 
 LCUI_API void LCUI_PrintSelector(LCUI_Selector selector);
+
+LCUI_API void LCUI_GetCSSRule(LCUI_CSSRule rule);
+
+LCUI_API void LCUI_SetCSSRule(LCUI_CSSRule rule);
 
 LCUI_API void LCUI_PrintCSSLibrary(void);
 

@@ -753,7 +753,7 @@ static int CSSParser_ParseSelector(LCUI_CSSParserContext ctx)
 
 static int CSSParser_SetRuleParser(LCUI_CSSParserContext ctx, const char *name)
 {
-	LCUI_CSSRule rule;
+	LCUI_CSSRuleType rule;
 	LCUI_CSSRuleParser parser;
 	for (rule = CSS_RULE_NONE; rule < CSS_RULE_TOTAL_NUM; ++rule) {
 		parser = &ctx->rule.parsers[rule];
@@ -955,6 +955,7 @@ LCUI_CSSParserContext CSSParser_Begin(size_t buffer_size, const char *space)
 	ctx->comment.prev_target = CSS_TARGET_NONE;
 	LinkedList_Init(&ctx->style.selectors);
 	memset(&ctx->rule, 0, sizeof(ctx->rule));
+	CSSParser_InitMediaRuleParser(ctx);
 	CSSParser_InitFontFaceRuleParser(ctx);
 	CSSRuleParser_OnFontFace(ctx, OnParsedFontFace);
 	return ctx;

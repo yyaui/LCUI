@@ -63,13 +63,13 @@ typedef enum LCUI_CSSParserTarget {
 	CSS_TARGET_TOTAL_NUM
 } LCUI_CSSParserTarget;
 
-typedef enum LCUI_CSSRule {
+typedef enum LCUI_CSSRuleType {
 	CSS_RULE_NONE,
 	CSS_RULE_FONT_FACE,	/**< @font-face */
 	CSS_RULE_IMPORT,	/**< @import */
 	CSS_RULE_MEDIA,		/**< @media */
 	CSS_RULE_TOTAL_NUM
-} LCUI_CSSRule;
+} LCUI_CSSRuleType;
 
 struct LCUI_CSSParserRec_;
 struct LCUI_CSSRuleParserRec_;
@@ -133,7 +133,7 @@ struct LCUI_CSSParserCommentContextRec_ {
 
 struct LCUI_CSSParserRuleContextRec_ {
 	int state;			/**< 规则解析器的状态 */
-	LCUI_CSSRule rule;		/**< 当前规则 */
+	LCUI_CSSRuleType rule;		/**< 当前规则 */
 	LCUI_CSSRuleParsers parsers;	/**< 规则解析器列表 */
 };
 
@@ -184,6 +184,7 @@ LCUI_API void LCUI_FreeCSSParser(void);
 LCUI_API int LCUI_AddCSSPropertyParser(LCUI_CSSPropertyParser sp);
 
 #include <LCUI/gui/css_rule_font_face.h>
+#include <LCUI/gui/css_rule_media.h>
 
 LCUI_END_HEADER
 
