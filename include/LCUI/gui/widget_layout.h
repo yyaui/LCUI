@@ -33,6 +33,6 @@
 
 LCUI_API void Widget_UpdateLayout(LCUI_Widget w);
 
-LCUI_API void Widget_ExecUpdateLayout(LCUI_Widget w);
+LCUI_API void Widget_DoLayout(LCUI_Widget w);
 
 #endif
